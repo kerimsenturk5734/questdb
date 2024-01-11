@@ -25,6 +25,7 @@
 package io.questdb.test;
 
 import io.questdb.Bootstrap;
+import io.questdb.ServerConfigurationException;
 import io.questdb.ServerMain;
 import io.questdb.cairo.CairoEngine;
 import io.questdb.cairo.CairoException;
@@ -42,7 +43,7 @@ public class TestServerMain extends ServerMain {
     private final StringSink sink = new StringSink();
     private SqlExecutionContext sqlExecutionContext;
 
-    public TestServerMain(String... args) {
+    public TestServerMain(String... args) throws ServerConfigurationException {
         super(args);
     }
 
@@ -50,7 +51,7 @@ public class TestServerMain extends ServerMain {
         super(bootstrap);
     }
 
-    public static TestServerMain createWithManualWalRun(String... args) {
+    public static TestServerMain createWithManualWalRun(String... args) throws ServerConfigurationException {
         return new TestServerMain(args) {
             @Override
             protected void setupWalApplyJob(

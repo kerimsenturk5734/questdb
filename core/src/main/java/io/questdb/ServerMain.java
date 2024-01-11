@@ -72,7 +72,7 @@ public class ServerMain implements Closeable {
     private boolean initialized;
     private WorkerPoolManager workerPoolManager;
 
-    public ServerMain(String... args) {
+    public ServerMain(String... args) throws ServerConfigurationException {
         this(new Bootstrap(args));
     }
 

@@ -66,11 +66,11 @@ public class Bootstrap {
     private final MicrosecondClock microsecondClock;
     private final String rootDirectory;
 
-    public Bootstrap(String... args) {
+    public Bootstrap(String... args) throws ServerConfigurationException {
         this(new PropBootstrapConfiguration(), args);
     }
 
-    public Bootstrap(BootstrapConfiguration bootstrapConfiguration, String... args) {
+    public Bootstrap(BootstrapConfiguration bootstrapConfiguration, String... args) throws ServerConfigurationException {
         if (args.length < 2) {
             throw new BootstrapException("Root directory name expected (-d <root-path>)");
         }
@@ -196,6 +196,9 @@ public class Bootstrap {
             }
             reportValidateConfig();
             reportCrashFiles(config.getCairoConfiguration(), log);
+        } catch (ServerConfigurationException cfgE) {
+            log.critical().$(cfgE.getMessage()).$();
+            throw cfgE;
         } catch (Throwable e) {
             log.errorW().$(e).$();
             throw new BootstrapException(e);

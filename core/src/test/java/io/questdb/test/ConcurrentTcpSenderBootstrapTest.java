@@ -24,6 +24,7 @@
 
 package io.questdb.test;
 
+import io.questdb.ServerConfigurationException;
 import io.questdb.ServerMain;
 import io.questdb.client.Sender;
 import io.questdb.std.Files;
@@ -75,7 +76,7 @@ public class ConcurrentTcpSenderBootstrapTest extends AbstractBootstrapTest {
         });
     }
 
-    private static void testConcurrentSenders(int nThreads, int startingOffset) throws InterruptedException {
+    private static void testConcurrentSenders(int nThreads, int startingOffset) throws InterruptedException, ServerConfigurationException {
         try (final ServerMain serverMain = new ServerMain(getServerMainArgs())) {
             serverMain.start();
             AtomicReference<Throwable> error = new AtomicReference<>();

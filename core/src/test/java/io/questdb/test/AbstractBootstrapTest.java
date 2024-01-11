@@ -24,10 +24,7 @@
 
 package io.questdb.test;
 
-import io.questdb.Bootstrap;
-import io.questdb.PropBootstrapConfiguration;
-import io.questdb.PropServerConfiguration;
-import io.questdb.ServerMain;
+import io.questdb.*;
 import io.questdb.cairo.CairoEngine;
 import io.questdb.cairo.TableToken;
 import io.questdb.cairo.wal.ApplyWal2TableJob;
@@ -87,7 +84,7 @@ public abstract class AbstractBootstrapTest extends AbstractTest {
         });
     }
 
-    public static TestServerMain startWithEnvVariables(String... envs) {
+    public static TestServerMain startWithEnvVariables(String... envs) throws ServerConfigurationException {
         assert envs.length % 2 == 0;
 
         Map<String, String> envMap = new HashMap<>();
@@ -107,7 +104,7 @@ public abstract class AbstractBootstrapTest extends AbstractTest {
     }
 
     @NotNull
-    private static Bootstrap newBootstrapWithEnvVariables(Map<String, String> envs) {
+    private static Bootstrap newBootstrapWithEnvVariables(Map<String, String> envs) throws ServerConfigurationException {
         Map<String, String> env = new HashMap<>(System.getenv());
 
         env.putAll(envs);
@@ -275,7 +272,7 @@ public abstract class AbstractBootstrapTest extends AbstractTest {
         try {
             new Bootstrap(extendArgsWith(args, Bootstrap.SWITCH_USE_DEFAULT_LOG_FACTORY_CONFIGURATION));
             Assert.fail();
-        } catch (Bootstrap.BootstrapException thr) {
+        } catch (ServerConfigurationException thr) {
             TestUtils.assertContains(thr.getMessage(), message);
         }
     }
