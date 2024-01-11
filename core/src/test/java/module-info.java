@@ -38,5 +38,4 @@ open module io.questdb.test {
 
     exports io.questdb.test;
     exports io.questdb.test.cairo;
-    exports io.questdb;
 }
